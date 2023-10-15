@@ -9,10 +9,9 @@ public class GameManager : MonoBehaviour {
     public Scoreboard playerScoreboard;
     public Scoreboard enemyScoreboard;
 
-    private float ballSpeed = 5.0f; // Valor padrão da velocidade da bola
-    private float enemySpeed = 4.0f; // Valor padrão da velocidade da IA
-
-    private float enemyErrorChance = 0.1f; // Taxa de erro padrão
+    private float ballSpeed = 5.0f;
+    private float enemySpeed = 4.0f;
+    private float enemyErrorChance = 0.1f;
 
     public enum DifficultyLevel {
         Easy,
@@ -22,8 +21,7 @@ public class GameManager : MonoBehaviour {
 
     public DifficultyLevel currentDifficulty = DifficultyLevel.Medium;
 
-    private bool gameStarted = false; // Propriedade para rastrear se o jogo foi iniciado
-    private bool gamePaused = false;
+    private bool gameStarted = false;
 
     public bool GameStarted {
         get { return gameStarted; }
@@ -34,10 +32,6 @@ public class GameManager : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Return)) {
                 StartGame();
             }
-        } else if (gameStarted && !gamePaused && Input.GetKeyDown(KeyCode.Escape)) {
-            PauseGame();
-        } else if (gameStarted && gamePaused && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Escape))) {
-            ResumeGame();
         }
     }
 
@@ -46,21 +40,8 @@ public class GameManager : MonoBehaviour {
         InitializeGame();
     }
 
-    private void PauseGame() {
-        Time.timeScale = 0; // Pausar o jogo
-        gamePaused = true;
-    }
-
-    private void ResumeGame() {
-        Time.timeScale = 1; // Retomar o jogo
-        gamePaused = false;
-    }
-
     private void InitializeGame() {
-        // Ajusta a velocidade da bola e da IA com base na dificuldade
         AdjustDifficulty();
-
-        // Inicia a bola
         ball.SetSpeed(ballSpeed);
         ball.InitializeMovement();
     }
@@ -70,46 +51,36 @@ public class GameManager : MonoBehaviour {
             case DifficultyLevel.Easy:
                 ballSpeed = 5.0f;
                 enemySpeed = 4.0f;
-                enemyErrorChance = 0.3f; // Taxa de erro mais alta
+                enemyErrorChance = 0.3f;
                 break;
             case DifficultyLevel.Medium:
                 ballSpeed = 7.5f;
                 enemySpeed = 6.0f;
-                enemyErrorChance = 0.2f; // Taxa de erro moderada
+                enemyErrorChance = 0.2f;
                 break;
             case DifficultyLevel.Hard:
                 ballSpeed = 10.0f;
                 enemySpeed = 8.0f;
-                enemyErrorChance = 0.1f; // Taxa de erro mais baixa
+                enemyErrorChance = 0.1f;
                 break;
         }
 
-        //Atualiza a velocidade e a taxa de erro da IA de acordo com a dificuldade
         enemy.SetSpeed(enemySpeed);
         enemy.SetErrorChance(enemyErrorChance);
     }
 
     public void SetDifficulty(DifficultyLevel difficulty) {
-        // Configura a dificuldade com base no valor passado
         currentDifficulty = difficulty;
         AdjustDifficulty();
     }
 
     public void PlayerScored() {
-        // Player marcou ponto, atualiza a pontuação do jogador e reinicia o jogo
         playerScoreboard.UpdatePlayerScore();
-        RestartGame();
+        playerScoreboard.ResetGameObjects();
     }
 
     public void EnemyScored() {
-        // Enemy marcou ponto, atualiza a pontuação do inimigo e reinicia o jogo
         enemyScoreboard.UpdateEnemyScore();
-        RestartGame();
-    }
-
-    private void RestartGame() {
-        // Reposiciona a bola e a IA
-        ball.RepositionBall();
-        enemy.RepositionEnemy();
+        enemyScoreboard.ResetGameObjects();
     }
 }

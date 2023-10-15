@@ -7,6 +7,7 @@ public class Scoreboard : MonoBehaviour {
     public Text p1ScoreText;
     public Text p2ScoreText;
     public Ball ball;
+    //public Player player;
     public Enemy enemy;
 
     private int scoreP1 = 0;
@@ -25,9 +26,10 @@ public class Scoreboard : MonoBehaviour {
         }
     }
 
-    private void ResetGameObjects() {
+    public void ResetGameObjects() {
         ball.RepositionBall();
         enemy.RepositionEnemy();
+        //player.RepositionPlayer();
     }
 
     public void UpdatePlayerScore() {
