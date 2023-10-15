@@ -8,7 +8,6 @@ public class Enemy : MonoBehaviour {
     private Transform ball;
     private Rigidbody2D ballRigidbody;
     
-    // Adicione um campo para a taxa de erro
     private float errorChance = 0.1f; // Taxa de erro padrão
 
     private void Awake() {
@@ -24,7 +23,7 @@ public class Enemy : MonoBehaviour {
         moveSpeed = newSpeed;
     }
 
-    // Adicione um método para configurar a taxa de erro
+    // Método para configurar a taxa de erro
     public void SetErrorChance(float newErrorChance) {
         errorChance = newErrorChance;
     }

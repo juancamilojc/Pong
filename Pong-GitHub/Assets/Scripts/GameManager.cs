@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void SetDifficulty(DifficultyLevel difficulty) {
-        // Configurar a dificuldade com base no valor passado
+        // Configura a dificuldade com base no valor passado
         currentDifficulty = difficulty;
         AdjustDifficulty();
     }
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void EnemyScored() {
-        // Enemy marcou ponto, atualiza a pontuação e do inimigo e reinicia o jogo
+        // Enemy marcou ponto, atualiza a pontuação do inimigo e reinicia o jogo
         enemyScoreboard.UpdateEnemyScore();
         RestartGame();
     }
