@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PauseMenu : MonoBehaviour {
+    public GameManager gameManager; // Referência para o GameManager no Unity
+
     public event Action OnResumeGame; // Evento para notificar a retomada do jogo
 
     private bool isPaused = false;
@@ -31,10 +33,11 @@ public class PauseMenu : MonoBehaviour {
     }
 
     public void RestartGame() {
-        // Coloque aqui a lógica para reiniciar o jogo com o placar zerado
+        gameManager.RestartGame();
+        ResumeGame();
     }
 
     public void ExitGame() {
-        // Coloque aqui a lógica para sair do jogo
+        Debug.Log("Sair!");
     }
 }

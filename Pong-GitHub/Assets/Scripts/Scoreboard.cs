@@ -37,8 +37,18 @@ public class Scoreboard : MonoBehaviour {
         p1ScoreText.text = scoreP1.ToString();
     }
 
+    public void ResetPlayerScore() {
+        scoreP1 = 0;
+        p1ScoreText.text = scoreP1.ToString();
+    }
+
     public void UpdateEnemyScore() {
         scoreP2++;
+        p2ScoreText.text = scoreP2.ToString();
+    }
+
+    public void ResetEnemyScore() {
+        scoreP2 = 0;
         p2ScoreText.text = scoreP2.ToString();
     }
 }

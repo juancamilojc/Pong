@@ -83,4 +83,12 @@ public class GameManager : MonoBehaviour {
         enemyScoreboard.UpdateEnemyScore();
         enemyScoreboard.ResetGameObjects();
     }
+
+    public void RestartGame() {
+        playerScoreboard.ResetPlayerScore();
+        enemyScoreboard.ResetEnemyScore();
+
+        playerScoreboard.ResetGameObjects();
+        player.RepositionPlayer();
+    }
 }

@@ -941,7 +941,6 @@ MonoBehaviour:
   p1ScoreText: {fileID: 1009217274}
   p2ScoreText: {fileID: 1945398964}
   ball: {fileID: 734269350}
-  player: {fileID: 1177322947}
   enemy: {fileID: 726951918}
 --- !u!61 &718221996
 BoxCollider2D:
@@ -1967,7 +1966,6 @@ MonoBehaviour:
   p1ScoreText: {fileID: 1009217274}
   p2ScoreText: {fileID: 1945398964}
   ball: {fileID: 734269350}
-  player: {fileID: 1177322947}
   enemy: {fileID: 726951918}
 --- !u!61 &1096645800
 BoxCollider2D:
@@ -2941,6 +2939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f889961715dc664aaedd0ad71f17932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1392878312}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
