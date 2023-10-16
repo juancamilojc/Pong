@@ -7,12 +7,13 @@ public class Enemy : MonoBehaviour {
     private float moveSpeed = 3.0f; // Velocidade da IA reduzida
     private Transform ball;
     private Rigidbody2D ballRigidbody;
-    
     private float errorChance = 0.1f; // Taxa de erro padrão
+    private Vector2 initialPosition;
 
     private void Awake() {
         ball = GameObject.FindGameObjectWithTag("Ball").transform;
         ballRigidbody = ball.GetComponent<Rigidbody2D>();
+        initialPosition = transform.position; // Define a posição inicial do Enemy
 
         if (ball == null || ballRigidbody == null) {
             Debug.LogError("Bola ou Rigidbody da bola não encontrados. Verifique a tag da bola e o Rigidbody.");
@@ -47,6 +48,6 @@ public class Enemy : MonoBehaviour {
     }
 
     public void RepositionEnemy() {
-        transform.position = new Vector3(transform.position.x, 0, 0);
+        transform.position = initialPosition;
     }
 }

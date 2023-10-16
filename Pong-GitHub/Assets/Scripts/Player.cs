@@ -5,11 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour {
     [SerializeField]
     private float speed = 5.0f;
-
     private GameManager gameManager; // Referência ao GameManager
+    private Vector2 initialPosition;
 
     private void Start() {
         gameManager = FindObjectOfType<GameManager>();
+        initialPosition = transform.position; // Define a posição inicial do Player
     }
 
     private void FixedUpdate() {
@@ -31,6 +32,6 @@ public class Player : MonoBehaviour {
     }
 
     public void RepositionPlayer() {
-        transform.position = new Vector3(transform.position.x, 0, 0);
+        transform.position = initialPosition;
     }
 }
