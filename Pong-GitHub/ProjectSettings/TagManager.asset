@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - P1Score
+  - Ball
+  - P2Score
+  - Enemy
   layers:
   - Default
   - TransparentFX
