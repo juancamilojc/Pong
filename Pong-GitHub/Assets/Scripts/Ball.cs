@@ -7,13 +7,14 @@ public class Ball : MonoBehaviour {
     private float speed = 5.0f;
     private Vector2 initialDirection;
     private Vector2 initialPosition;
+
     private Rigidbody2D rb;
-    
+
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
-        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous; // Define o modo de detecção de colisão como Contínuo
-        rb.velocity = Vector2.zero; // Garante que a velocidade seja zero ao iniciar
-        initialPosition = transform.position; //Define a posição inicial da bola
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        rb.velocity = Vector2.zero;
+        initialPosition = transform.position;
     }
 
     public void SetSpeed(float newSpeed) {
@@ -28,8 +29,9 @@ public class Ball : MonoBehaviour {
         rb.velocity = initialDirection;
     }
 
-    public void RepositionBall() {
+    public void ResetPosition() {
         transform.position = initialPosition;
         InitializeMovement();
+        Debug.Log("ResetPosition() // Ball");
     }
 }

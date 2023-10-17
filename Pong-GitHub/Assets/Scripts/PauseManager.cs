@@ -5,45 +5,24 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour {
     private bool isPaused = false;
-    public GameObject pauseMenuScreen; // Referência para a tela do menu de pausa no Unity
-    public GameObject gameOverScreen; // Referência para a tela de Game Over no Unity
-    private bool isGameOver = false; // Variável para indicar se é um Game Over
 
-    private void Start() {
-        var pauseMenuComponent = pauseMenuScreen.GetComponent<PauseMenu>();
-        pauseMenuComponent.OnResumeGame += (isGameOver) => ResumeGame(isGameOver);
-    }
+    public bool IsGamePaused { get { return isPaused; } }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape) && !isPaused) {
-            PauseGame(isGameOver);
-        } else if (isPaused) {
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Return)) {
-                ResumeGame(isGameOver);
-            }
-        }
-    }
+    public event Action<bool> OnPauseGame;
 
-    public void PauseGame(bool isGameOver) {
-        this.isGameOver = isGameOver;
+    public void PauseGame() {
         isPaused = true;
         Time.timeScale = 0;
-
-        if (isGameOver) {
-            gameOverScreen.SetActive(true);
-        } else {
-            pauseMenuScreen.SetActive(true);
+        if (OnPauseGame != null) {
+            OnPauseGame(true);
         }
     }
 
-    public void ResumeGame(bool isGameOver) {
+    public void ResumeGame() {
         isPaused = false;
         Time.timeScale = 1;
-
-        if (isGameOver) {
-            gameOverScreen.SetActive(false);
-        } else {
-            pauseMenuScreen.SetActive(false);
+        if (OnPauseGame != null) {
+            OnPauseGame(false);
         }
     }
 }

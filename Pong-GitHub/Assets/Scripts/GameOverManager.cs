@@ -1,41 +1,61 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameOverManager : MonoBehaviour {
+    public GameManager gameManager;
+    public PauseManager pauseManager;
     public GameObject gameOverScreen;
     public GameObject winText;
     public GameObject loseText;
-    public GameManager gameManager; // Adicione uma referência ao GameManager
+    public Scoreboard playerScoreboard;
+    public Scoreboard enemyScoreboard;
+    private bool isGameOverScreenActive = false;
 
-    public void ShowGameOver(bool playerWins) {
+    public bool IsGameOverScreenActive { get { return isGameOverScreenActive; } }
+
+    private void Awake() {
+        playerScoreboard.OnGameOver += HandleGameOver;
+        enemyScoreboard.OnGameOver += HandleGameOver;
+        Debug.Log("Awake() -> // GameOverManager");
+    }
+
+    public void ShowGameOver() {
+        isGameOverScreenActive = true;
+        pauseManager.PauseGame();
         gameOverScreen.SetActive(true);
 
-        if (playerWins) {
+        int playerScore = playerScoreboard.GetPlayerScore();
+        int enemyScore = enemyScoreboard.GetEnemyScore();
+
+        if (playerScore > enemyScore) {
             winText.SetActive(true);
             loseText.SetActive(false);
-        }
-        else
-        {
+        } else {
             winText.SetActive(false);
             loseText.SetActive(true);
         }
     }
 
     public void HideGameOver() {
-        gameOverScreen.SetActive(false);
+        isGameOverScreenActive = false;
         winText.SetActive(false);
         loseText.SetActive(false);
+        gameOverScreen.SetActive(false);
+        pauseManager.ResumeGame();
     }
 
-    public void RestartGame() {
-        gameManager.RestartGame(); // Chame a função RestartGame do GameManager
-        HideGameOver(); // Oculte a tela de Game Over
+    public void OnRestartButtonClicked() {
+        HideGameOver();
+        gameManager.RestartGame();
     }
 
-    public void ExitGame() {
+    public void OnExitButtonClicked() {
         Debug.Log("Sair!");
-        //Application.Quit(); // Encerre a aplicação
+        //Application.Quit();
+    }
+
+    private void HandleGameOver(bool gameOver) {
+        ShowGameOver();
     }
 }

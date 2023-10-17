@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
     [SerializeField]
-    private float moveSpeed = 3.0f; // Velocidade da IA reduzida
+    private float moveSpeed = 3.0f;
     private Transform ball;
     private Rigidbody2D ballRigidbody;
-    private float errorChance = 0.1f; // Taxa de erro padrão
+    private float errorChance = 0.1f;
     private Vector2 initialPosition;
 
     private void Awake() {
         ball = GameObject.FindGameObjectWithTag("Ball").transform;
         ballRigidbody = ball.GetComponent<Rigidbody2D>();
-        initialPosition = transform.position; // Define a posição inicial do Enemy
+        initialPosition = transform.position;
 
         if (ball == null || ballRigidbody == null) {
             Debug.LogError("Bola ou Rigidbody da bola não encontrados. Verifique a tag da bola e o Rigidbody.");
@@ -24,9 +24,8 @@ public class Enemy : MonoBehaviour {
         moveSpeed = newSpeed;
     }
 
-    // Método para configurar a taxa de erro
     public void SetErrorChance(float newErrorChance) {
-        errorChance = newErrorChance;
+        errorChance = Mathf.Clamp01(newErrorChance);
     }
 
     private void Update() {
@@ -35,7 +34,7 @@ public class Enemy : MonoBehaviour {
             float predictedY = ball.position.y + (ballRigidbody.velocity.y * timeToIntercept);
 
             if (Random.value < errorChance) {
-                predictedY += Random.Range(-1f, 1f); // Erro aleatório com base na taxa de erro
+                predictedY += Random.Range(-1f, 1f);
             }
 
             if (transform.position.y < predictedY) {
@@ -47,7 +46,8 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    public void RepositionEnemy() {
+    public void ResetPosition() {
         transform.position = initialPosition;
+        Debug.Log("ResetPosition() // Enemy");
     }
 }
