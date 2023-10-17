@@ -4,40 +4,40 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PauseMenu : MonoBehaviour {
-    public GameManager gameManager; // Referência para o GameManager no Unity
-
-    public event Action OnResumeGame; // Evento para notificar a retomada do jogo
+    public GameManager gameManager;
+    public event Action<bool> OnResumeGame; // Evento para notificar a retomada do jogo
 
     private bool isPaused = false;
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (isPaused) {
-                ResumeGame();
+                ResumeGame(isPaused); // Passe isPaused ao chamar ResumeGame
             }
             else {
-                PauseGame();
+                PauseGame(isPaused); // Passe isPaused ao chamar PauseGame
             }
         }
     }
 
-    public void PauseGame() {
+    public void PauseGame(bool isGameOver) {
         isPaused = true;
         gameObject.SetActive(true);
     }
 
-    public void ResumeGame() {
+    public void ResumeGame(bool isGameOver) {
         isPaused = false;
-        gameObject.SetActive(false);
-        OnResumeGame?.Invoke(); // Dispara o evento de retomada do jogo
+        Time.timeScale = 1; // Retoma o jogo
+        OnResumeGame?.Invoke(isGameOver);
     }
 
     public void RestartGame() {
         gameManager.RestartGame();
-        ResumeGame();
+        ResumeGame(isPaused); // Passe isPaused ao chamar ResumeGame
     }
 
     public void ExitGame() {
         Debug.Log("Sair!");
+        //Application.Quit(); // Encerre a aplicação
     }
 }

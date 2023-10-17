@@ -8,6 +8,128 @@ public class GameManager : MonoBehaviour {
     public Enemy enemy;
     public Scoreboard playerScoreboard;
     public Scoreboard enemyScoreboard;
+    public GameOverManager gameOverManager;
+    public PauseManager pauseManager;
+
+    private float ballSpeed = 5.0f;
+    private float enemySpeed = 4.0f;
+    private float enemyErrorChance = 0.1f;
+
+    public enum DifficultyLevel {
+        Easy,
+        Medium,
+        Hard
+    }
+
+    public DifficultyLevel currentDifficulty = DifficultyLevel.Medium;
+
+    private bool gameStarted = false;
+    private bool isGameOver = false; // Variável para indicar se é um Game Over
+
+    public bool GameStarted {
+        get { return gameStarted; }
+    }
+
+    private void Update() {
+        if (!gameStarted) {
+            if (Input.GetKeyDown(KeyCode.Return)) {
+                StartGame();
+            }
+        }
+
+        if (!isGameOver) {
+            // Verifique se alguém ganhou e defina isGameOver como verdadeiro
+            HandleGameResult();
+        }
+    }
+
+    private void StartGame() {
+        gameStarted = true;
+        InitializeGame();
+    }
+
+    private void InitializeGame() {
+        AdjustDifficulty();
+        ball.SetSpeed(ballSpeed);
+        ball.InitializeMovement();
+    }
+
+    private void AdjustDifficulty() {
+        switch (currentDifficulty) {
+            case DifficultyLevel.Easy:
+                ballSpeed = 5.0f;
+                enemySpeed = 4.0f;
+                enemyErrorChance = 0.3f;
+                break;
+            case DifficultyLevel.Medium:
+                ballSpeed = 7.5f;
+                enemySpeed = 6.0f;
+                enemyErrorChance = 0.2f;
+                break;
+            case DifficultyLevel.Hard:
+                ballSpeed = 10.0f;
+                enemySpeed = 8.0f;
+                enemyErrorChance = 0.1f;
+                break;
+        }
+
+        enemy.SetSpeed(enemySpeed);
+        enemy.SetErrorChance(enemyErrorChance);
+    }
+
+    public void SetDifficulty(DifficultyLevel difficulty) {
+        currentDifficulty = difficulty;
+        AdjustDifficulty();
+    }
+
+    public void PlayerScored() {
+        playerScoreboard.UpdatePlayerScore();
+        playerScoreboard.ResetGameObjects();
+    }
+
+    public void EnemyScored() {
+        enemyScoreboard.UpdateEnemyScore();
+        enemyScoreboard.ResetGameObjects();
+    }
+
+    public void RestartGame() {
+        playerScoreboard.ResetPlayerScore();
+        enemyScoreboard.ResetEnemyScore();
+
+        playerScoreboard.ResetGameObjects();
+        player.RepositionPlayer();
+    }
+
+    public void HandleGameResult() {
+        if (playerScoreboard.GetPlayerScore() >= 10) {
+            GameOver(true); // Player ganhou
+        }
+        else if (enemyScoreboard.GetEnemyScore() >= 10) {
+            GameOver(false); // IA ganhou
+        }
+    }
+
+    public void GameOver(bool playerWins) {
+        isGameOver = true; // Define que é um Game Over
+        
+        // Pausa o jogo, o PauseManager irá ativar a tela de Game Over
+        pauseManager.PauseGame(true);
+
+        // Chama o GameOverManager para exibir a tela de Game Over
+        gameOverManager.ShowGameOver(playerWins);
+    }
+}
+
+
+/*
+public class GameManager : MonoBehaviour {
+    public Ball ball;
+    public Player player;
+    public Enemy enemy;
+    public Scoreboard playerScoreboard;
+    public Scoreboard enemyScoreboard;
+    public GameOverManager gameOverManager;
+    public PauseManager pauseManager;
 
     private float ballSpeed = 5.0f;
     private float enemySpeed = 4.0f;
@@ -91,4 +213,25 @@ public class GameManager : MonoBehaviour {
         playerScoreboard.ResetGameObjects();
         player.RepositionPlayer();
     }
+
+    public void HandleGameResult() {
+        if (playerScoreboard.GetPlayerScore() >= 10) {
+            GameOver(true); // Player ganhou
+        }
+        else if (enemyScoreboard.GetEnemyScore() >= 10) {
+            GameOver(false); // IA ganhou
+        }
+    }
+
+    public void GameOver(bool playerWins) {
+        // Chama o PauseManager para pausar o jogo, qui está o problema, pois ele também ativa a tela de pause
+        pauseManager.PauseGame();
+
+        // Chame o GameOverManager para exibir a tela de Game Over
+        gameOverManager.ShowGameOver(playerWins);
+
+        // Reinicia o jogo
+        RestartGame();
+    }
 }
+*/

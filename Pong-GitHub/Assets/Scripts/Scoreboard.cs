@@ -25,6 +25,14 @@ public class Scoreboard : MonoBehaviour {
         }
     }
 
+    public int GetPlayerScore() {
+        return scoreP1;
+    }
+
+    public int GetEnemyScore() {
+        return scoreP2;
+    }
+
     public void ResetGameObjects() {
         ball.RepositionBall();
         enemy.RepositionEnemy();
