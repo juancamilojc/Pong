@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour {
     public GameManager gameManager;
@@ -10,6 +11,8 @@ public class GameOverManager : MonoBehaviour {
     public GameObject loseText;
     public Scoreboard playerScoreboard;
     public Scoreboard enemyScoreboard;
+    [SerializeField]
+    private string Scene;
     private bool isGameOverScreenActive = false;
 
     public bool IsGameOverScreenActive { get { return isGameOverScreenActive; } }
@@ -17,7 +20,7 @@ public class GameOverManager : MonoBehaviour {
     private void Awake() {
         playerScoreboard.OnGameOver += HandleGameOver;
         enemyScoreboard.OnGameOver += HandleGameOver;
-        Debug.Log("Awake() -> // GameOverManager");
+        //Debug.Log("Awake() -> // GameOverManager");
     }
 
     public void ShowGameOver() {
@@ -50,12 +53,16 @@ public class GameOverManager : MonoBehaviour {
         gameManager.RestartGame();
     }
 
+    public void OnReturnMainMenuButtonClicked() {
+        SceneManager.LoadScene(Scene);
+    }
+
     public void OnExitButtonClicked() {
         Debug.Log("Sair!");
         //Application.Quit();
     }
 
-    private void HandleGameOver(bool gameOver) {
+    private void HandleGameOver() {
         ShowGameOver();
     }
 }

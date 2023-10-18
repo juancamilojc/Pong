@@ -1,30 +1,32 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Scoreboard : MonoBehaviour {
-    public Text p1ScoreText;
-    public Text p2ScoreText;
+    public TextMeshProUGUI p1ScoreText;
+    public TextMeshProUGUI p2ScoreText;
     private int scoreP1 = 0;
     private int scoreP2 = 0;
+    [SerializeField]
+    public int finalScore = 10;
 
-    public event Action<bool> OnGameOver;
-
+    public event Action OnGameOver;
     public event Action OnPointScored;
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Ball")) {
             if (gameObject.CompareTag("P1Score")) {
                 UpdatePlayerScore();
-                Debug.Log("OnTriggerEnter2D() -> UpdatePlayerScore() // Scoreboard");
+                //Debug.Log("OnTriggerEnter2D() -> UpdatePlayerScore() // Scoreboard");
             }
             else if (gameObject.CompareTag("P2Score")) {
                 UpdateEnemyScore();
-                Debug.Log("OnTriggerEnter2D() -> UpdateEnemyScore() // Scoreboard");
+                //Debug.Log("OnTriggerEnter2D() -> UpdateEnemyScore() // Scoreboard");
             }
 
             OnPointScored?.Invoke();
-            Debug.Log("OnTriggerEnter2D() -> OnPointScored?.Invoke() // Scoreboard");
+            //Debug.Log("OnTriggerEnter2D() -> OnPointScored?.Invoke() // Scoreboard");
         }
     }
 
@@ -40,14 +42,14 @@ public class Scoreboard : MonoBehaviour {
         scoreP1++;
         p1ScoreText.text = scoreP1.ToString();
         CheckWinCondition(scoreP1);
-        Debug.Log("UpdatePlayerScore() // Scoreboard");
+        //Debug.Log("UpdatePlayerScore() // Scoreboard");
     }
 
     public void UpdateEnemyScore() {
         scoreP2++;
         p2ScoreText.text = scoreP2.ToString();
         CheckWinCondition(scoreP2);
-        Debug.Log("UpdateEnemyScore() // Scoreboard");
+        //Debug.Log("UpdateEnemyScore() // Scoreboard");
     }
 
     public void ResetPlayerScore() {
@@ -61,8 +63,8 @@ public class Scoreboard : MonoBehaviour {
     }
 
     private void CheckWinCondition(int score) {
-        if (score >= 10 && OnGameOver != null) {
-            OnGameOver(true);
+        if (score >= finalScore) {
+            OnGameOver?.Invoke();
         }
     }
 }

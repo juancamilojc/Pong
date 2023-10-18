@@ -13,16 +13,12 @@ public class PauseManager : MonoBehaviour {
     public void PauseGame() {
         isPaused = true;
         Time.timeScale = 0;
-        if (OnPauseGame != null) {
-            OnPauseGame(true);
-        }
+        OnPauseGame?.Invoke(true);
     }
 
     public void ResumeGame() {
         isPaused = false;
         Time.timeScale = 1;
-        if (OnPauseGame != null) {
-            OnPauseGame(false);
-        }
+        OnPauseGame?.Invoke(false);
     }
 }

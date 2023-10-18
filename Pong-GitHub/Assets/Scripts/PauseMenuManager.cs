@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour {
     public GameManager gameManager;
     public GameOverManager gameOverManager;
     public PauseManager pauseManager;
     public GameObject pauseMenuScreen;
+    [SerializeField]
+    private string Scene;
 
     private void Start() {
         pauseManager.OnPauseGame += HandlePauseGame;
@@ -26,20 +29,6 @@ public class PauseMenuManager : MonoBehaviour {
         }
     }
 
-    /* --- Update() v1
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Return)) {
-            if (pauseManager.IsGamePaused) {
-                pauseManager.ResumeGame();
-                HidePauseMenu();
-            } else if (!gameOverManager.IsGameOverScreenActive) {
-                pauseManager.PauseGame();
-                ShowPauseMenu();
-            }
-        }
-    }
-    */
-
     public void ShowPauseMenu() {
         pauseMenuScreen.SetActive(true);
     }
@@ -57,6 +46,10 @@ public class PauseMenuManager : MonoBehaviour {
         gameManager.RestartGame();
         pauseManager.ResumeGame();
         HidePauseMenu();
+    }
+
+    public void OnReturnMainMenuButtonClicked() {
+        SceneManager.LoadScene(Scene);
     }
 
     public void OnExitButtonClicked() {

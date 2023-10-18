@@ -31,6 +31,6 @@ public class Player : MonoBehaviour {
 
     public void ResetPosition() {
         transform.position = initialPosition;
-        Debug.Log("ResetPosition() // Player");
+        //Debug.Log("ResetPosition() // Player");
     }
 }

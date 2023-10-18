@@ -18,22 +18,13 @@ public class GameManager : MonoBehaviour {
 
     private void Awake() {
         OnScoreboardEvent();
-    }
-
-    private void Start() {
-        
-    }
-
-    private void Update() {
-        if (!GameStarted && Input.GetKeyDown(KeyCode.Return)) {
-            StartGame();
-        }
+        Invoke("StartGame", 0.5f);
     }
 
     private void OnScoreboardEvent() {
         playerScoreboard.OnPointScored += HandlePointScored;
         enemyScoreboard.OnPointScored += HandlePointScored;
-        Debug.Log("OnScoreboardEvent() // GameManager");
+        //Debug.Log("OnScoreboardEvent() // GameManager");
     }
 
     private void StartGame() {
@@ -55,17 +46,17 @@ public class GameManager : MonoBehaviour {
             case DifficultyLevel.Easy:
                 ballSpeed = 5.0f;
                 enemySpeed = 4.0f;
-                enemyErrorChance = 0.4f;
+                enemyErrorChance = 0.6f;
                 break;
             case DifficultyLevel.Medium:
                 ballSpeed = 7.5f;
                 enemySpeed = 6.0f;
-                enemyErrorChance = 0.2f;
+                enemyErrorChance = 0.4f;
                 break;
             case DifficultyLevel.Hard:
                 ballSpeed = 10.0f;
                 enemySpeed = 8.0f;
-                enemyErrorChance = 0.1f;
+                enemyErrorChance = 0.2f;
                 break;
         }
 
@@ -76,13 +67,13 @@ public class GameManager : MonoBehaviour {
 
     private void HandlePointScored() {
         ResetGameObjects();
-        Debug.Log("HandlePointScored() -> ResetGameObjects() // GameManager");
+        //Debug.Log("HandlePointScored() -> ResetGameObjects() // GameManager");
     }
 
     public void ResetGameObjects() {
         ball.ResetPosition();
         enemy.ResetPosition();
-        Debug.Log("ResetGameObjects() // GameManager");
+        //Debug.Log("ResetGameObjects() // GameManager");
     }
 
     public void RestartGame() {

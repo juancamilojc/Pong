@@ -32,6 +32,6 @@ public class Ball : MonoBehaviour {
     public void ResetPosition() {
         transform.position = initialPosition;
         InitializeMovement();
-        Debug.Log("ResetPosition() // Ball");
+        //Debug.Log("ResetPosition() // Ball");
     }
 }

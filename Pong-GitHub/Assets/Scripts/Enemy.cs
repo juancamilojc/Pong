@@ -48,6 +48,6 @@ public class Enemy : MonoBehaviour {
 
     public void ResetPosition() {
         transform.position = initialPosition;
-        Debug.Log("ResetPosition() // Enemy");
+        //Debug.Log("ResetPosition() // Enemy");
     }
 }
