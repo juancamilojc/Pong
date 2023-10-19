@@ -58,8 +58,8 @@ public class GameOverManager : MonoBehaviour {
     }
 
     public void OnExitButtonClicked() {
-        Debug.Log("Sair!");
-        //Application.Quit();
+        //Debug.Log("Sair!");
+        Application.Quit();
     }
 
     private void HandleGameOver() {

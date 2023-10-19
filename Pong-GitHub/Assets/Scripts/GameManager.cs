@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
 
     private void Awake() {
         OnScoreboardEvent();
-        Invoke("StartGame", 0.5f);
+        Invoke("StartGame", 0.25f);
     }
 
     private void OnScoreboardEvent() {

@@ -11,7 +11,7 @@ public class MainMenuManager : MonoBehaviour {
     }
 
     public void ExitGame() {
-        Debug.Log("Sair!");
-        //Application.Quit();
+        //Debug.Log("Sair!");
+        Application.Quit();
     }
 }

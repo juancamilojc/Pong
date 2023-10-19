@@ -53,8 +53,8 @@ public class PauseMenuManager : MonoBehaviour {
     }
 
     public void OnExitButtonClicked() {
-        Debug.Log("Sair!");
-        //Application.Quit();
+        //Debug.Log("Sair!");
+        Application.Quit();
     }
 
     private void HandlePauseGame(bool isGamePaused) {
